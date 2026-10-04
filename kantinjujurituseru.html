@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>kantinjujurituseru — KANTIN</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap');
+
+:root{
+  --brown:#5a301e;
+  --brown2:#7b4429;
+  --cream:#fff7e7;
+  --peach:#f7c88b;
+  --orange:#ee8746;
+  --yellow:#ffd96a;
+  --green:#73955a;
+  --pink:#e98583;
+  --text:#3d2a22;
+  --white:#fffdf8;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:#f7ead4;
+  color:var(--text);
+  font-family:'Nunito',sans-serif;
+}
+button{font:inherit;cursor:pointer;border:0}
+.app{max-width:1180px;margin:auto;background:var(--cream);min-height:100vh}
+
+/* TOP */
+.topbar{
+  position:sticky;top:0;z-index:20;
+  height:72px;padding:12px 22px;
+  display:flex;align-items:center;justify-content:space-between;
+  background:rgba(255,247,231,.96);
+  border-bottom:2px solid #efd8b5;
+  backdrop-filter:blur(8px);
+}
+.brand{
+  display:flex;align-items:center;gap:10px;
+  font-family:'Baloo 2';font-weight:800;font-size:27px;color:var(--brown);
+}
+.brand-icon{
+  width:42px;height:42px;border-radius:14px;
+  display:grid;place-items:center;background:var(--orange);
+  color:white;font-size:22px;transform:rotate(-4deg);
+}
+.cart-btn{
+  background:var(--brown);color:white;border-radius:16px;
+  padding:10px 15px;font-weight:800;
+}
+.cart-count{
+  display:inline-grid;place-items:center;
+  min-width:22px;height:22px;margin-left:5px;
+  background:var(--yellow);color:var(--brown);
+  border-radius:50%;font-size:12px;
+}
+
+/* HERO */
+.hero{
+  margin:20px;
+  min-height:360px;border-radius:34px;overflow:hidden;
+  position:relative;
+  background:
+    radial-gradient(circle at 80% 20%,#ffd76d 0 7%,transparent 7.5%),
+    radial-gradient(circle at 87% 18%,#f3a85e 0 3%,transparent 3.5%),
+    linear-gradient(135deg,#63321e,#a9572d 60%,#d78348);
+  color:white;
+  display:flex;align-items:center;
+  padding:48px;
+}
+.hero:before{
+  content:"";
+  position:absolute;right:-50px;bottom:-80px;
+  width:360px;height:360px;border-radius:50%;
+  background:#f6bd73;opacity:.18;
+}
+.hero-copy{max-width:560px;position:relative;z-index:2}
+.badge{
+  display:inline-block;background:#ffd96a;color:#5a301e;
+  padding:7px 14px;border-radius:20px;font-weight:800;
+  transform:rotate(-2deg);margin-bottom:12px;
+}
+.hero h1{
+  font-family:'Baloo 2';font-size:68px;line-height:.9;
+  margin:0 0 10px;letter-spacing:1px;
+}
+.hero h1 span{color:#ffd96a}
+.hero p{font-size:17px;line-height:1.7;margin:0 0 22px}
+.hero-btn{
+  padding:13px 20px;border-radius:17px;
+  background:#fff5d9;color:var(--brown);font-weight:900;
+  box-shadow:0 6px 0 #d39b59;
+}
+.doodle{
+  position:absolute;right:8%;bottom:20px;
+  width:270px;height:240px;
+}
+.bowl{
+  position:absolute;left:60px;bottom:15px;
+  width:170px;height:80px;background:#f6d38c;
+  border-radius:0 0 90px 90px;border:7px solid #ffe8b2;
+}
+.food{
+  position:absolute;left:75px;bottom:76px;width:140px;height:70px;
+  background:#7b9556;border-radius:50% 50% 40% 40%;
+  transform:rotate(-4deg);
+}
+.food:before,.food:after{
+  content:"";position:absolute;background:#f08d50;border-radius:50%;
+}
+.food:before{width:25px;height:25px;left:25px;top:18px}
+.food:after{width:20px;height:20px;right:30px;top:10px}
+.star{position:absolute;color:#ffd96a;font-size:40px}
+.s1{right:10px;top:5px}.s2{left:15px;top:40px;font-size:25px}
+
+/* CONTENT */
+.content{padding:0 20px 45px}
+.section-title{
+  display:flex;align-items:end;justify-content:space-between;
+  margin:32px 4px 16px;
+}
+.section-title h2{
+  font-family:'Baloo 2';font-size:31px;margin:0;color:var(--brown);
+}
+.section-title small{color:#92765f;font-weight:700}
+.search{
+  width:100%;padding:14px 17px;border:2px solid #efd9b7;
+  border-radius:17px;background:white;outline:none;
+  font-size:15px;margin-bottom:16px;
+}
+.categories{display:flex;gap:9px;overflow:auto;padding-bottom:5px}
+.cat{
+  white-space:nowrap;padding:9px 16px;border-radius:20px;
+  background:white;color:#755542;font-weight:800;
+  border:1px solid #ead4b3;
+}
+.cat.active{background:var(--brown);color:white;border-color:var(--brown)}
+
+/* PRODUCTS */
+.grid{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:15px;
+}
+.product{
+  background:white;border:2px solid #f0dfc5;
+  border-radius:22px;padding:11px;position:relative;
+  transition:.2s;box-shadow:0 5px 0 #ead5b7;
+}
+.product:hover{transform:translateY(-3px)}
+.pic{
+  height:145px;border-radius:17px;
+  display:grid;place-items:center;font-size:70px;
+  background:linear-gradient(145deg,#ffe8b9,#f7c67e);
+}
+.product:nth-child(2) .pic{background:linear-gradient(145deg,#ffe4d8,#f7a879)}
+.product:nth-child(3) .pic{background:linear-gradient(145deg,#e6efd0,#a9c27e)}
+.product:nth-child(4) .pic{background:linear-gradient(145deg,#ffe8a5,#e9bb5d)}
+.product:nth-child(5) .pic{background:linear-gradient(145deg,#eadcf4,#c7a9df)}
+.product:nth-child(6) .pic{background:linear-gradient(145deg,#d7edf2,#91c8d2)}
+.product:nth-child(7) .pic{background:linear-gradient(145deg,#ffe0df,#e9a2a0)}
+.product:nth-child(8) .pic{background:linear-gradient(145deg,#e7edcc,#b7ca7a)}
+.product h3{font-family:'Baloo 2';font-size:19px;margin:10px 2px 0}
+.meta{font-size:12px;color:#977a63}
+.price{font-weight:900;color:#b65e32;margin:4px 2px 9px}
+.add{
+  width:100%;padding:9px;border-radius:13px;
+  background:#f3c75d;color:#57321f;font-weight:900;
+}
+
+/* FEATURES */
+.feature-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}
+.feature{
+  background:white;border:2px solid #efddc2;border-radius:22px;
+  padding:20px;box-shadow:0 5px 0 #ead5b7;
+}
+.feature .icon{font-size:34px}
+.feature h3{font-family:'Baloo 2';font-size:21px;margin:6px 0}
+.feature p{font-size:14px;color:#806a59;line-height:1.6}
+
+/* ADMIN */
+.admin{
+  background:#5b3423;color:white;border-radius:27px;
+  padding:25px;margin-top:35px;
+}
+.admin h2{font-family:'Baloo 2';margin:0 0 5px;font-size:29px}
+.admin p{color:#ead6c0;margin-top:0}
+.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:18px 0}
+.stat{background:#70432c;border-radius:18px;padding:17px}
+.stat b{font-size:26px;color:#ffd96a;display:block}
+.stat small{color:#ead6c0}
+.restock{
+  background:#fff8eb;color:var(--text);
+  border-radius:18px;padding:18px;
+}
+.restock-title{font-weight:900;margin-bottom:12px}
+.rank{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;border-bottom:1px dashed #dfc7a5;
+}
+.rank:last-child{border:0}
+.num{
+  width:28px;height:28px;border-radius:50%;
+  background:#f3c75d;display:grid;place-items:center;font-weight:900;
+}
+.bar{height:8px;border-radius:10px;background:#efdcc0;flex:1;overflow:hidden}
+.bar i{display:block;height:100%;background:#83a55f;border-radius:10px}
+
+
+/* ROLE SWITCH */
+.role-switch{
+  display:flex;gap:7px;background:#f2e3ca;padding:5px;border-radius:16px;
+}
+.role-btn{
+  padding:8px 12px;border-radius:12px;background:transparent;
+  color:#765641;font-weight:900;font-size:12px;
+}
+.role-btn.active{background:#fff;color:#5a301e;box-shadow:0 3px 8px rgba(80,45,25,.10)}
+.user-view,.manager-view{display:block}
+.manager-view{display:none}
+.manager-top{
+  background:#fff;border:2px solid #efddc2;border-radius:24px;
+  padding:20px;margin-top:25px;box-shadow:0 5px 0 #ead5b7;
+}
+.manager-top h2{font-family:'Baloo 2';color:#5a301e;margin:0;font-size:28px}
+.manager-top p{margin:3px 0 0;color:#8b715d}
+.manage-actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:15px}
+.manage-pill{
+  padding:9px 13px;border-radius:14px;background:#f7ead4;
+  color:#694631;font-weight:800;font-size:13px;
+}
+.product-row{
+  display:flex;align-items:center;gap:12px;padding:12px 0;
+  border-bottom:1px dashed #dec6a5;
+}
+.product-row:last-child{border:0}
+.product-mini{
+  width:48px;height:48px;border-radius:14px;background:#ffe4b5;
+  display:grid;place-items:center;font-size:25px;
+}
+.product-row .grow{flex:1}
+.stock-low{color:#c45d3b;font-weight:900}
+.stock-ok{color:#6d8f55;font-weight:900}
+.manager-card{
+  margin-top:16px;background:#fff8eb;border-radius:18px;padding:17px;
+}
+.manager-card h3{font-family:'Baloo 2';color:#5a301e;margin:0 0 8px;font-size:21px}
+@media(max-width:650px){
+ .role-switch{gap:3px}.role-btn{padding:7px 9px;font-size:11px}
+}
+
+
+
+.payment-box{
+  margin-top:16px;background:#f6ead5;border-radius:17px;padding:15px;
+}
+.payment-box h3{font-family:'Baloo 2';color:#5a301e;margin:0 0 9px;font-size:20px}
+.payment-options{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.payment-option{
+  padding:12px;border:2px solid #e3caa6;border-radius:14px;
+  background:white;color:#654532;font-weight:900;text-align:center;
+}
+.payment-option.selected{
+  background:#6f935a;color:white;border-color:#6f935a;
+}
+.empty-transactions{
+  text-align:center;padding:18px;color:#927b68;
+  background:#fffaf0;border-radius:14px;
+}
+.stock-warning{
+  display:inline-block;background:#fde1c7;color:#b95d35;
+  padding:4px 8px;border-radius:9px;font-size:11px;font-weight:900;
+  margin-left:5px;
+}
+
+
+.qris-overlay{
+  display:none;position:fixed;inset:0;background:rgba(45,25,15,.62);
+  z-index:70;padding:20px;align-items:center;justify-content:center;
+}
+.qris-box{
+  width:min(390px,100%);background:#fff9ed;border-radius:28px;
+  padding:25px;text-align:center;border:2px solid #efd8b5;
+  box-shadow:0 20px 60px rgba(45,25,15,.25);
+}
+.qris-box h2{font-family:'Baloo 2';font-size:30px;color:#5a301e;margin:0}
+.qris-box p{font-size:13px;color:#806a59;margin:3px 0 15px}
+.fake-qr{
+  width:210px;height:210px;margin:0 auto 15px;
+  padding:10px;background:white;border:8px solid white;
+  border-radius:12px;
+  display:grid;place-items:center;
+}
+.fake-qr img{width:100%;height:100%;display:block}
+.qris-note{
+  background:#f5e6cd;border-radius:13px;padding:10px;
+  font-size:12px;color:#765641;margin-bottom:13px;
+}
+.qris-close{
+  width:100%;padding:12px;border-radius:15px;background:#6f935a;
+  color:white;font-weight:900;
+}
+
+
+.manager-controls{
+  display:flex;gap:10px;flex-wrap:wrap;margin-top:15px;
+}
+.manager-control-btn{
+  padding:10px 14px;border-radius:14px;font-weight:900;
+  background:#f3c75d;color:#5a301e;
+}
+.manager-control-btn.secondary{background:#f0dfc5}
+.stock-edit{
+  display:flex;align-items:center;gap:8px;
+}
+.stock-input{
+  width:70px;padding:7px;border:2px solid #dec6a5;
+  border-radius:10px;text-align:center;font-weight:900;
+  background:white;
+}
+.edit-save{
+  padding:7px 10px;border-radius:10px;background:#6f935a;color:white;font-weight:900;
+}
+
+/* MANAGER LOGIN */
+.login-overlay{
+  display:none;position:fixed;inset:0;background:rgba(45,25,15,.62);
+  z-index:60;padding:20px;align-items:center;justify-content:center;
+}
+.login-box{
+  width:min(410px,100%);background:#fff9ed;border-radius:28px;
+  padding:28px;box-shadow:0 20px 60px rgba(45,25,15,.25);
+  border:2px solid #efd8b5;
+}
+.login-icon{
+  width:62px;height:62px;border-radius:20px;background:#f3c75d;
+  display:grid;place-items:center;font-size:31px;margin-bottom:12px;
+}
+.login-box h2{font-family:'Baloo 2';font-size:30px;color:#5a301e;margin:0}
+.login-box p{color:#806a59;font-size:14px;margin:3px 0 18px}
+.login-label{display:block;font-weight:900;color:#634431;font-size:13px;margin:12px 0 6px}
+.login-input{
+  width:100%;padding:12px 14px;border:2px solid #ead4b2;
+  border-radius:14px;background:white;outline:none;font:inherit;
+}
+.login-input:focus{border-color:#d8914d}
+.login-submit{
+  width:100%;padding:13px;border-radius:15px;background:#6f935a;
+  color:white;font-weight:900;margin-top:17px;
+}
+.login-cancel{
+  width:100%;padding:11px;border-radius:15px;background:#f0dfc5;
+  color:#654532;font-weight:900;margin-top:8px;
+}
+.login-error{
+  display:none;background:#fde1dc;color:#a94732;
+  padding:10px 12px;border-radius:12px;font-size:13px;font-weight:800;margin-top:12px;
+}
+
+/* CART MODAL */
+.overlay{
+  display:none;position:fixed;inset:0;background:rgba(45,25,15,.55);
+  z-index:50;padding:20px;align-items:flex-end;justify-content:center;
+}
+.modal{
+  width:min(520px,100%);background:#fff9ed;border-radius:27px 27px 20px 20px;
+  padding:23px;max-height:85vh;overflow:auto;
+}
+.modal h2{font-family:'Baloo 2';font-size:30px;color:var(--brown);margin:0 0 12px}
+.close{float:right;background:#f0dfc5;border-radius:50%;width:34px;height:34px}
+.cart-item{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px dashed #dec6a5}
+.total{font-size:21px;font-weight:900;display:flex;justify-content:space-between;margin:20px 0}
+.pay{width:100%;padding:14px;border-radius:16px;background:#6f935a;color:white;font-weight:900}
+
+/* FOOTER */
+footer{text-align:center;padding:30px;color:#957961;font-size:13px}
+
+@media(max-width:900px){
+ .grid{grid-template-columns:repeat(3,1fr)}
+ .doodle{right:-20px;opacity:.65}
+}
+@media(max-width:650px){
+ .hero{margin:12px;padding:34px 25px;min-height:430px}
+ .hero h1{font-size:55px}
+ .doodle{right:-50px;bottom:-5px;transform:scale(.75);opacity:.45}
+ .grid{grid-template-columns:repeat(2,1fr);gap:12px}
+ .pic{height:120px;font-size:58px}
+ .feature-grid,.stats{grid-template-columns:1fr}
+ .content{padding:0 12px 35px}
+ .topbar{padding:10px 14px}
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="topbar">
+  <div class="brand"><div class="brand-icon">K</div>KANTIN</div>
+  <div style="display:flex;align-items:center;gap:8px">
+    <div class="role-switch">
+      <button class="role-btn active" id="userRoleBtn" onclick="switchRole('user')">Pengguna</button>
+      <button class="role-btn" id="managerRoleBtn" onclick="switchRole('manager')">Pengelola</button>
+    </div>
+    <button class="cart-btn" id="cartTopBtn" onclick="openCart()">Keranjang <span class="cart-count" id="count">0</span></button>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-copy">
+    <div class="badge">Kantin Kejujuran Sekolah</div>
+    <h1>Jajan <span>jujur</span>,<br>lebih seru!</h1>
+    <p>
+      Selamat datang di KANTIN. Pilih jajananmu, cek harga,
+      masukkan ke keranjang, lalu lakukan pembayaran dengan jujur.
+    </p>
+    <button class="hero-btn" onclick="document.getElementById('menu').scrollIntoView()">Lihat Menu →</button>
+  </div>
+  <div class="doodle" aria-hidden="true">
+    <div class="star s1">✦</div><div class="star s2">✦</div>
+    <div class="food"></div><div class="bowl"></div>
+  </div>
+</section>
+
+<main class="content">
+<div class="user-view" id="userView">
+  <div class="section-title" id="menu">
+    <div><h2>Menu Hari Ini</h2><small>Pilih jajanan favoritmu</small></div>
+  </div>
+
+  <input class="search" id="search" placeholder="Cari makanan atau minuman..." oninput="filterProducts()">
+
+  <div class="categories">
+    <button class="cat active" onclick="setCategory('all',this)">Semua</button>
+    <button class="cat" onclick="setCategory('makanan',this)">Makanan</button>
+    <button class="cat" onclick="setCategory('minuman',this)">Minuman</button>
+    <button class="cat" onclick="setCategory('snack',this)">Snack</button>
+  </div>
+
+  <div class="grid" id="products"></div>
+
+  <div class="section-title">
+    <div><h2>Kenapa KANTIN?</h2><small>Bukan cuma buat jajan</small></div>
+  </div>
+  <div class="feature-grid">
+    <div class="feature">
+      <div class="icon">🍱</div>
+      <h3>Transaksi Mudah</h3>
+      <p>Siswa dapat memilih barang, melihat total belanja, dan mencatat transaksi secara mandiri.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">📦</div>
+      <h3>Stok Terpantau</h3>
+      <p>Jumlah stok berkurang otomatis setelah transaksi sehingga pengelola lebih mudah memantaunya.</p>
+    </div>
+    <div class="feature">
+      <div class="icon">🌱</div>
+      <h3>Greedy Restock</h3>
+      <p>Sistem membantu menentukan barang yang lebih diprioritaskan ketika dana restock terbatas.</p>
+    </div>
+  </div>
+
+  <div class="manager-top">
+    <h2>Ingin mengelola kantin?</h2>
+    <p>Gunakan mode <b>Pengelola</b> di bagian atas untuk melihat stok dan rekomendasi restock.</p>
+  </div>
+
+</div>
+
+<div class="manager-view" id="managerView">
+  <div class="manager-top">
+    <h2>Dashboard Pengelola</h2>
+    <p>Kelola stok, pantau transaksi, dan lihat rekomendasi restock KANTIN.</p>
+    <div class="manage-actions">
+      <div class="manage-pill">📦 Kelola Stok</div>
+      <div class="manage-pill">🧾 Transaksi</div>
+      <div class="manage-pill">🧠 Algoritma Greedy</div>
+    </div>
+    <div class="manager-controls">
+      <button class="manager-control-btn" onclick="resetDailyTransactions()">↻ Reset Transaksi Hari Ini</button>
+      <button class="manager-control-btn secondary" onclick="renderStock()">↻ Refresh Stok</button>
+    </div>
+  </div>
+
+  <div class="section-title">
+    <div><h2>Ringkasan Hari Ini</h2><small>Data pengelolaan kantin</small></div>
+  </div>
+
+  <div class="stats">
+    <div class="stat" style="background:#70432c;color:white;border-radius:18px;padding:17px">
+      <b id="transactionCount">0</b><small>Total transaksi</small>
+    </div>
+    <div class="stat" style="background:#70432c;color:white;border-radius:18px;padding:17px">
+      <b id="transactionTotal">Rp0</b><small>Total transaksi (Rp)</small>
+    </div>
+    <div class="stat" style="background:#70432c;color:white;border-radius:18px;padding:17px">
+      <b id="availableProducts">0</b><small>Produk tersedia</small>
+    </div>
+  </div>
+
+  <div class="manager-card">
+    <h3>📦 Kondisi Stok</h3>
+    <div id="stockList"></div>
+  </div>
+
+  <div class="manager-card">
+    <h3>🧠 Rekomendasi Restock — Greedy</h3>
+    <p style="font-size:14px;color:#806a59">
+      Sistem memprioritaskan barang berdasarkan rasio jumlah terjual dibanding biaya restock.
+    </p>
+    <div class="restock">
+      <div class="rank"><div class="num">1</div><b>Air Mineral</b><div class="bar"><i style="width:100%"></i></div><b>4,0</b></div>
+      <div class="rank"><div class="num">2</div><b>Teh</b><div class="bar"><i style="width:63%"></i></div><b>2,5</b></div>
+      <div class="rank"><div class="num">3</div><b>Bakso</b><div class="bar"><i style="width:38%"></i></div><b>1,5</b></div>
+      <div class="rank"><div class="num">4</div><b>Roti</b><div class="bar"><i style="width:30%"></i></div><b>1,2</b></div>
+    </div>
+  </div>
+
+  <div class="manager-card">
+    <h3>🧾 Transaksi Terbaru</h3>
+    <div id="transactionList" class="empty-transactions">Belum ada transaksi.</div>
+  </div>
+</div>
+
+</main>
+
+<footer>
+  <strong>KANTIN — Smart & Honest Canteen System</strong><br>
+  Jajan dengan mudah. Bayar dengan jujur.
+</footer>
+
+</div>
+
+
+<div class="login-overlay" id="loginOverlay">
+  <div class="login-box">
+    <div class="login-icon">🔐</div>
+    <h2>Login Pengelola</h2>
+    <p>Halaman ini khusus untuk pengelola KANTIN.</p>
+
+    <label class="login-label" for="managerUsername">Username</label>
+    <input class="login-input" id="managerUsername" type="text" autocomplete="username" placeholder="Masukkan username">
+
+    <label class="login-label" for="managerPassword">Password</label>
+    <input class="login-input" id="managerPassword" type="password" autocomplete="current-password" placeholder="Masukkan password">
+
+    <div class="login-error" id="loginError">Username atau password salah.</div>
+
+    <button class="login-submit" onclick="loginManager()">Masuk sebagai Pengelola</button>
+    <button class="login-cancel" onclick="closeManagerLogin()">Kembali</button>
+  </div>
+</div>
+
+
+<div class="qris-overlay" id="qrisOverlay">
+  <div class="qris-box">
+    <h2>Bayar dengan QRIS</h2>
+    <p>Scan QR Code di bawah ini untuk melanjutkan pembayaran.</p>
+    <div class="fake-qr">
+      <img id="qrisImage" alt="QRIS KANTIN">
+    </div>
+    <div class="qris-note">
+      QR Code ini adalah contoh/demo untuk prototype KANTIN dan bukan QR pembayaran asli.
+    </div>
+    <button class="qris-close" onclick="finishQris()">Saya sudah scan</button>
+  </div>
+</div>
+
+<div class="overlay" id="overlay" onclick="outsideClose(event)">
+  <div class="modal">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>Keranjang Kamu</h2>
+    <div id="cartItems"></div>
+    <div class="payment-box">
+      <h3>Metode Pembayaran</h3>
+      <div class="payment-options">
+        <button class="payment-option selected" id="cashBtn" onclick="selectPayment('Cash')">💵 Cash</button>
+        <button class="payment-option" id="qrisBtn" onclick="selectPayment('QRIS')">▦ QRIS</button>
+      </div>
+    </div>
+    <div class="total"><span>Total</span><span id="total">Rp0</span></div>
+    <button class="pay" onclick="checkout()">Konfirmasi Pembayaran</button>
+  </div>
+</div>
+
+<script>
+const products = [
+ {name:"Nasi Ayam",price:12000,emoji:"🍗",cat:"makanan",stock:12},
+ {name:"Mie Goreng",price:9000,emoji:"🍜",cat:"makanan",stock:8},
+ {name:"Salad Sayur",price:8000,emoji:"🥗",cat:"makanan",stock:6},
+ {name:"Roti Cokelat",price:6000,emoji:"🥐",cat:"snack",stock:15},
+ {name:"Puding",price:5000,emoji:"🍮",cat:"snack",stock:10},
+ {name:"Es Teh",price:4000,emoji:"🧋",cat:"minuman",stock:20},
+ {name:"Jus Mangga",price:7000,emoji:"🥭",cat:"minuman",stock:7},
+ {name:"Pisang",price:5000,emoji:"🍌",cat:"snack",stock:11}
+];
+
+let cart=[];
+let category='all';
+
+
+let selectedPayment='Cash';
+let transactionCount=0;
+let transactionTotal=0;
+let transactions=[];
+
+function switchRole(role){
+  const userView=document.getElementById('userView');
+  const managerView=document.getElementById('managerView');
+  const userBtn=document.getElementById('userRoleBtn');
+  const managerBtn=document.getElementById('managerRoleBtn');
+  const cartBtn=document.getElementById('cartTopBtn');
+
+  if(role==='manager'){
+    document.getElementById('loginOverlay').style.display='flex';
+    document.getElementById('loginError').style.display='none';
+    document.getElementById('managerUsername').value='';
+    document.getElementById('managerPassword').value='';
+    return;
+  }
+
+  userView.style.display='block';
+  managerView.style.display='none';
+  userBtn.classList.add('active');
+  managerBtn.classList.remove('active');
+  cartBtn.style.display='inline-flex';
+}
+
+function loginManager(){
+  const username=document.getElementById('managerUsername').value.trim();
+  const password=document.getElementById('managerPassword').value;
+  const error=document.getElementById('loginError');
+
+  if(username==='kantin+' && password==='kantin+berintegritas'){
+    document.getElementById('loginOverlay').style.display='none';
+    document.getElementById('userView').style.display='none';
+    document.getElementById('managerView').style.display='block';
+    document.getElementById('userRoleBtn').classList.remove('active');
+    document.getElementById('managerRoleBtn').classList.add('active');
+    document.getElementById('cartTopBtn').style.display='none';
+    renderStock();
+    renderManagerStats();
+    renderTransactions();
+  }else{
+    error.style.display='block';
+  }
+}
+
+function closeManagerLogin(){
+  document.getElementById('loginOverlay').style.display='none';
+  document.getElementById('userRoleBtn').classList.add('active');
+  document.getElementById('managerRoleBtn').classList.remove('active');
+}
+
+function selectPayment(method){
+  selectedPayment=method;
+  document.getElementById('cashBtn').classList.toggle('selected',method==='Cash');
+  document.getElementById('qrisBtn').classList.toggle('selected',method==='QRIS');
+}
+
+function rupiah(n){
+ return new Intl.NumberFormat('id-ID',{style:'currency',currency:'IDR',maximumFractionDigits:0}).format(n);
+}
+function renderProducts(){
+ const q=document.getElementById('search').value.toLowerCase();
+ const box=document.getElementById('products');
+ box.innerHTML='';
+ products.forEach((p,i)=>{
+   if(category!=='all'&&p.cat!==category)return;
+   if(!p.name.toLowerCase().includes(q))return;
+   box.innerHTML+=`
+    <article class="product">
+      <div class="pic">${p.emoji}</div>
+      <h3>${p.name}</h3>
+      <div class="meta">Stok ${p.stock}</div>
+      <div class="price">${rupiah(p.price)}</div>
+      <button class="add" onclick="addToCart(${i})">+ Tambah</button>
+    </article>`;
+ });
+}
+function filterProducts(){renderProducts()}
+function setCategory(c,el){
+ category=c;
+ document.querySelectorAll('.cat').forEach(x=>x.classList.remove('active'));
+ el.classList.add('active');
+ renderProducts();
+}
+function addToCart(i){
+ const p=products[i];
+ const found=cart.find(x=>x.i===i);
+ if(found)found.qty++;
+ else cart.push({i,qty:1});
+ updateCart();
+}
+function updateCart(){
+ document.getElementById('count').textContent=cart.reduce((a,x)=>a+x.qty,0);
+}
+function openCart(){
+ document.getElementById('overlay').style.display='flex';
+ renderCart();
+}
+function closeCart(){document.getElementById('overlay').style.display='none'}
+function outsideClose(e){if(e.target.id==='overlay')closeCart()}
+function renderCart(){
+ const box=document.getElementById('cartItems');
+ if(!cart.length){
+   box.innerHTML='<p style="color:#927b68">Keranjang masih kosong. Yuk pilih jajanan!</p>';
+   document.getElementById('total').textContent='Rp0';return;
+ }
+ let total=0;
+ box.innerHTML=cart.map(x=>{
+   const p=products[x.i];total+=p.price*x.qty;
+   return `<div class="cart-item"><span>${p.emoji} ${p.name} × ${x.qty}</span><b>${rupiah(p.price*x.qty)}</b></div>`;
+ }).join('');
+ document.getElementById('total').textContent=rupiah(total);
+}
+function checkout(){
+ if(!cart.length){alert('Keranjang masih kosong!');return}
+
+ for(const item of cart){
+   const p=products[item.i];
+   if(item.qty>p.stock){
+     alert('Stok '+p.name+' tidak mencukupi.');
+     return;
+   }
+ }
+
+ if(selectedPayment==='QRIS'){
+   document.getElementById('qrisOverlay').style.display='flex';
+ }else{
+   completeTransaction('Cash');
+ }
+}
+
+function finishQris(){
+ document.getElementById('qrisOverlay').style.display='none';
+ completeTransaction('QRIS');
+}
+
+function completeTransaction(payment){
+ let total=0;
+ cart.forEach(item=>{
+   const p=products[item.i];
+   total += p.price*item.qty;
+   p.stock -= item.qty;
+ });
+
+ transactionCount++;
+ transactionTotal += total;
+
+ const now=new Date();
+ const time=now.toLocaleTimeString('id-ID',{hour:'2-digit',minute:'2-digit'});
+ transactions.unshift({
+   items:cart.map(item=>products[item.i].name+' × '+item.qty).join(', '),
+   total:total,
+   payment:payment,
+   time:time
+ });
+
+ if(transactions.length>10) transactions.pop();
+
+ alert('Transaksi berhasil dicatat dengan pembayaran '+payment+'. Terima kasih sudah jujur!');
+
+ cart=[];
+ updateCart();
+ closeCart();
+ renderProducts();
+ renderStock();
+ renderManagerStats();
+ renderTransactions();
+
+ selectedPayment='Cash';
+ document.getElementById('cashBtn').classList.add('selected');
+ document.getElementById('qrisBtn').classList.remove('selected');
+}
+
+function renderStock(){
+  const box=document.getElementById('stockList');
+  if(!box)return;
+  box.innerHTML=products.map((p,i)=>{
+    const low=p.stock<=7;
+    return `
+    <div class="product-row">
+      <div class="product-mini">${p.emoji}</div>
+      <div class="grow">
+        <b>${p.name}</b><br>
+        <small>${rupiah(p.price)} ${low?'<span class="stock-warning">Stok menipis</span>':''}</small>
+      </div>
+      <div class="stock-edit">
+        <input class="stock-input" id="stock-${i}" type="number" min="0" value="${p.stock}">
+        <button class="edit-save" onclick="saveStock(${i})">Simpan</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function saveStock(index){
+  const input=document.getElementById('stock-'+index);
+  const newStock=Math.max(0,parseInt(input.value)||0);
+  products[index].stock=newStock;
+  renderStock();
+  renderProducts();
+  renderManagerStats();
+  alert('Stok '+products[index].name+' berhasil diperbarui menjadi '+newStock+'.');
+}
+
+function resetDailyTransactions(){
+  if(!transactionCount && !transactions.length){
+    alert('Belum ada transaksi yang perlu direset.');
+    return;
+  }
+
+  const yakin=confirm('Reset transaksi hari ini? Jumlah transaksi, total transaksi, dan daftar transaksi akan kembali ke 0. Stok tidak akan berubah.');
+  if(!yakin)return;
+
+  transactionCount=0;
+  transactionTotal=0;
+  transactions=[];
+  renderManagerStats();
+  renderTransactions();
+  alert('Transaksi hari ini berhasil direset.');
+}
+
+function renderManagerStats(){
+  const count=document.getElementById('transactionCount');
+  const total=document.getElementById('transactionTotal');
+  const available=document.getElementById('availableProducts');
+  if(count)count.textContent=transactionCount;
+  if(total)total.textContent=rupiah(transactionTotal);
+  if(available)available.textContent=products.filter(p=>p.stock>0).length;
+}
+
+function renderTransactions(){
+  const box=document.getElementById('transactionList');
+  if(!box)return;
+  if(!transactions.length){
+    box.className='empty-transactions';
+    box.innerHTML='Belum ada transaksi.';
+    return;
+  }
+  box.className='';
+  box.innerHTML=transactions.map(t=>`
+    <div class="product-row">
+      <div class="product-mini">🧾</div>
+      <div class="grow"><b>${t.items}</b><br><small>${t.time} • ${t.payment} • Berhasil</small></div>
+      <strong>${rupiah(t.total)}</strong>
+    </div>
+  `).join('');
+}
+
+
+document.getElementById('managerPassword').addEventListener('keydown', function(e){
+  if(e.key==='Enter') loginManager();
+});
+
+document.getElementById('qrisImage').src='data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMTAiIGhlaWdodD0iMjEwIiB2aWV3Qm94PSIwIDAgMjEwIDIxMCI+CjxyZWN0IHdpZHRoPSIyMTAiIGhlaWdodD0iMjEwIiBmaWxsPSJ3aGl0ZSIvPgo8ZyBmaWxsPSIjMTcxMjBmIj4KPHJlY3QgeD0iMTAiIHk9IjEwIiB3aWR0aD0iNTUiIGhlaWdodD0iNTUiLz48cmVjdCB4PSIyMCIgeT0iMjAiIHdpZHRoPSIzNSIgaGVpZ2h0PSIzNSIgZmlsbD0id2hpdGUiLz48cmVjdCB4PSIyOCIgeT0iMjgiIHdpZHRoPSIxOSIgaGVpZ2h0PSIxOSIvPgo8cmVjdCB4PSIxNDUiIHk9IjEwIiB3aWR0aD0iNTUiIGhlaWdodD0iNTUiLz48cmVjdCB4PSIxNTUiIHk9IjIwIiB3aWR0aD0iMzUiIGhlaWdodD0iMzUiIGZpbGw9IndoaXRlIi8+PHJlY3QgeD0iMTYzIiB5PSIyOCIgd2lkdGg9IjE5IiBoZWlnaHQ9IjE5Ii8+CjxyZWN0IHg9IjEwIiB5PSIxNDUiIHdpZHRoPSI1NSIgaGVpZ2h0PSI1NSIvPjxyZWN0IHg9IjIwIiB5PSIxNTUiIHdpZHRoPSIzNSIgaGVpZ2h0PSIzNSIgZmlsbD0id2hpdGUiLz48cmVjdCB4PSIyOCIgeT0iMTYzIiB3aWR0aD0iMTkiIGhlaWdodD0iMTkiLz4KPHJlY3QgeD0iNzgiIHk9IjEwIiB3aWR0aD0iMTAiIGhlaWdodD0iMjUiLz48cmVjdCB4PSI5NSIgeT0iMTAiIHdpZHRoPSIxNCIgaGVpZ2h0PSIxMCIvPjxyZWN0IHg9IjExMyIgeT0iMTgiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIvPgo8cmVjdCB4PSI3NSIgeT0iNTAiIHdpZHRoPSIyNSIgaGVpZ2h0PSIxMiIvPjxyZWN0IHg9IjEwOCIgeT0iNDgiIHdpZHRoPSIxMiIgaGVpZ2h0PSIyMCIvPjxyZWN0IHg9IjEyNiIgeT0iNTUiIHdpZHRoPSIyMiIgaGVpZ2h0PSI5Ii8+CjxyZWN0IHg9Ijc1IiB5PSI3OCIgd2lkdGg9IjE0IiBoZWlnaHQ9IjE0Ii8+PHJlY3QgeD0iOTgiIHk9Ijc1IiB3aWR0aD0iMjgiIGhlaWdodD0iMTAiLz48cmVjdCB4PSIxMzUiIHk9Ijc2IiB3aWR0aD0iMTIiIGhlaWdodD0iMjMiLz48cmVjdCB4PSIxNTciIHk9Ijc4IiB3aWR0aD0iMjUiIGhlaWdodD0iMTIiLz4KPHJlY3QgeD0iMTUiIHk9Ijc4IiB3aWR0aD0iMjAiIGhlaWdodD0iMTAiLz48cmVjdCB4PSI0MyIgeT0iNzUiIHdpZHRoPSIxMiIgaGVpZ2h0PSIyNSIvPjxyZWN0IHg9IjU1IiB5PSI5NSIgd2lkdGg9IjIwIiBoZWlnaHQ9IjEyIi8+CjxyZWN0IHg9Ijc4IiB5PSIxMDIiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIvPjxyZWN0IHg9Ijk1IiB5PSI5NiIgd2lkdGg9IjE3IiBoZWlnaHQ9IjE3Ii8+PHJlY3QgeD0iMTE5IiB5PSIxMDUiIHdpZHRoPSIzMCIgaGVpZ2h0PSIxMCIvPjxyZWN0IHg9IjE1OCIgeT0iMTAwIiB3aWR0aD0iMTQiIGhlaWdodD0iMjUiLz4KPHJlY3QgeD0iNzUiIHk9IjEzMCIgd2lkdGg9IjI1IiBoZWlnaHQ9IjEyIi8+PHJlY3QgeD0iMTA4IiB5PSIxMjUiIHdpZHRoPSIxMCIgaGVpZ2h0PSIyNSIvPjxyZWN0IHg9IjEyOCIgeT0iMTMwIiB3aWR0aD0iMTgiIGhlaWdodD0iMTMiLz48cmVjdCB4PSIxNTUiIHk9IjEzMCIgd2lkdGg9IjM1IiBoZWlnaHQ9IjEwIi8+CjxyZWN0IHg9Ijc1IiB5PSIxNTUiIHdpZHRoPSIxMyIgaGVpZ2h0PSIzMCIvPjxyZWN0IHg9Ijk1IiB5PSIxNTAiIHdpZHRoPSIyNSIgaGVpZ2h0PSIxMiIvPjxyZWN0IHg9IjEyNiIgeT0iMTYwIiB3aWR0aD0iMTMiIGhlaWdodD0iMjgiLz48cmVjdCB4PSIxNDUiIHk9IjE1MCIgd2lkdGg9IjEyIiBoZWlnaHQ9IjE3Ii8+PHJlY3QgeD0iMTY1IiB5PSIxNzAiIHdpZHRoPSIyNSIgaGVpZ2h0PSIxOCIvPgo8L2c+Cjwvc3ZnPg==';
+renderProducts();
+renderManagerStats();
+renderTransactions();
+</script>
+</body>
+</html>
